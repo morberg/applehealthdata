@@ -101,16 +101,6 @@ def abbreviate(s, enabled=ABBREVIATE):
     return m.group(1) if enabled and m else s
 
 
-def encode(s):
-    """
-    Encode string for writing to file.
-    In Python 2, this encodes as UTF-8, whereas in Python 3,
-    it does nothing
-    """
-    return s.encode('UTF-8') if sys.version_info.major < 3 else s
-
-
-
 class HealthDataExtractor(object):
     """
     Extract health data from Apple Health App's XML export, export.xml.
@@ -212,7 +202,7 @@ class HealthDataExtractor(object):
                 kind = attributes['type'] if node.tag == 'Record' else node.tag
                 values = [format_value(attributes.get(field), datatype)
                           for (field, datatype) in FIELDS[node.tag].items()]
-                line = encode(','.join(values) + '\n')
+                line = ','.join(values) + '\n'
                 self.handles[kind].write(line)
 
     def close_files(self):

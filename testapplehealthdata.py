@@ -21,7 +21,7 @@ from collections import Counter
 
 from applehealthdata import (HealthDataExtractor,
                              format_freqs, format_value,
-                             abbreviate, encode)
+                             abbreviate)
 
 CLEAN_UP = True
 VERBOSE = False
@@ -178,13 +178,6 @@ two: 1''')
         for k in unchanged:
             self.assertEqual((k, abbreviate(k)), (k, k))
 
-    def test_encode(self):
-        # This test looks strange, but because of the import statments
-        #     from __future__ import unicode_literals
-        # in Python 2, type('a') is unicode, and the point of the encode
-        # function is to ensure that it has been converted to a UTF-8 string
-        # before writing to file.
-        self.assertEqual(type(encode('a')), str)
 
     def test_extracted_reference_stats(self):
         path = copy_test_data()
